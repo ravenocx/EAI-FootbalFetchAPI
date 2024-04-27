@@ -89,8 +89,14 @@ async function updateCounts() {
             const countryTeam = await fetch(`https://apiv3.apifootball.com/?action=get_teams&league_id=${league.league_id}&APIkey=${API_KEY}`);
             const teams = await countryTeam.json()
             console.log("teams",teams)
+
+            
             for(let team of teams){
-                countryTeams.push(team)
+                const existingLeague = countryTeams.find(item => item.team_name === team.team_name);
+
+                if(!existingLeague){
+                    countryTeams.push(team)
+                }
             }
         }
         console.log(countryTeams)
