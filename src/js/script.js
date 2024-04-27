@@ -43,6 +43,7 @@ async function updateCounts() {
     matchContainer.innerHTML = '';
 
     const countryContainer = document.getElementById('country');
+    const leagueContainer = document.getElementById('league');
 
     for (const match of latestMatches) {
         matchContainer.innerHTML += `
@@ -102,7 +103,22 @@ async function updateCounts() {
         <p class="flex justify-center items-center">${leagueCountry.length}</p>
         <p class="flex justify-center items-center">${countryTeams.length}</p>
         `
+
+        const topStanding = await fetch(`https://apiv3.apifootball.com/?action=get_standings&league_id=${leagues[i].league_id}&APIkey=${API_KEY}`);
+        const topStandingData = await topStanding.json()
+        console.log("League ID : ",leagues[i].league_id)
+
+
+        leagueContainer.innerHTML += `
+        <img src="${leagues[i].league_logo}" alt="league-logo" class="mx-auto w-20">
+        <p class="flex justify-center items-center">${leagues[i].league_name}</p>
+        <p class="flex justify-center items-center">${leagues[i].league_season}</p>
+        <div class="flex justify-center items-center">
+            <img src="${topStandingData[0].team_badge}" alt="team-badge" class="size-14 mr-6">
+            <p>${topStandingData[0].team_name}</p>
+        </div>
         
+        `
     }
     
 
