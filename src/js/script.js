@@ -8,7 +8,7 @@ async function fetchData(){
         
         const [countryData, leagueData, matchData] = await Promise.all([country, league ,match].map(p => p.then(response => response.json())));
         
-        uniqueLeagues = []
+        let uniqueLeagues = []
 
         for(const league of leagueData){
             const existingLeague = uniqueLeagues.find(item => item.league_name === league.league_name);
