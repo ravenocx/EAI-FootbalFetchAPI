@@ -21,27 +21,23 @@
     </header>
 
     <main>
-        <div class="flex justify-center mt-10 pb-20">
-            <div class="overflow-x-auto">
-                <table id="country-table" class="table w-[1440px] text-[#959FA8] text-lg text-center ">
-                  <!-- head -->
-                  <thead>
-                    <tr class="text-gray-500 font-bold text-lg border-b-2">
-                      <th>No.</th>
-                      <th>Country Flag</th>
-                      <th>Country Name</th>
-                      <th>Total League</th>
-                      <th>Total Team</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    
-                  </tbody>
-                </table>
-              </div>
+        <div class="flex justify-center mt-10">
+            <div>
+                <label id="" class="">Choose Country : </label>
+                <br>
+                <select name="country" id="country" class="w-[1296px] bg-gray-200 h-10 rounded-lg px-4 mt-4">
+                    <option value="">Choose...</option>
+                </select>
+            </div>
+            <button class="btn w-28 ml-8 mt-8 bg-gray-200" onclick="showLeagues()">Submit</button>
+        </div>
+
+        <div id="content-container">
+            
+        
         </div>
     </main>
    
-    <script src="/src/js/country.js"></script>
+    <script src="/src/js/standing.js"></script>
 </body>
 </html>

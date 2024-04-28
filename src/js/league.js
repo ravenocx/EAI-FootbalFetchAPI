@@ -31,7 +31,7 @@ async function showData(){
 
     const leagues = data.leagues
 
-    for (let i = 0; i < 10; i++) { // for (let i = 0; i < countries.length; i++) -> for get all country data
+    for (let i = 0; i < 10; i++) { // for (let i = 0; i < leagues.length; i++) -> for get all leagues data
         const topStanding = await fetch(`https://apiv3.apifootball.com/?action=get_standings&league_id=${leagues[i].league_id}&APIkey=${API_KEY}`);
         const topStandingData = await topStanding.json()
         console.log("League ID : ",leagues[i].league_id)
