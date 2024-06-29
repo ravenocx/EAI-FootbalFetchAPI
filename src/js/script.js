@@ -1,10 +1,10 @@
-const API_KEY = "c120fedf6674e771f5af2e7fb14750813d7f479bab5f09c39dab738fab2f56f2"
+const API_KEY = "64be657bfea2a03855f04094768eb21f1d7ca0d28918fcfc14e77e2ef36acb27"
 
 async function fetchData(){
     try {
         const country = fetch(`https://apiv3.apifootball.com/?action=get_countries&APIkey=${API_KEY}`);
         const league = fetch(`https://apiv3.apifootball.com/?action=get_leagues&APIkey=${API_KEY}`);
-        const match = fetch(`https://apiv3.apifootball.com/?action=get_events&from=2024-04-27&to=2024-04-29&league_id=152&APIkey=${API_KEY}`);
+        const match = fetch(`https://apiv3.apifootball.com/?action=get_events&from=2024-05-01&to=2024-06-29&league_id=152&APIkey=${API_KEY}`);
         
         const [countryData, leagueData, matchData] = await Promise.all([country, league ,match].map(p => p.then(response => response.json())));
         
@@ -29,7 +29,7 @@ async function fetchData(){
     }
 }
 
-async function updateCounts() {
+async function updateView() {
     const data = await fetchData();
 
     const countryCount = data.countries.length;
@@ -42,8 +42,7 @@ async function updateCounts() {
     matchContainer = document.getElementById('match');
     matchContainer.innerHTML = '';
 
-    const countryContainer = document.getElementById('country');
-    const leagueContainer = document.getElementById('league');
+    
 
     for (const match of latestMatches) {
         matchContainer.innerHTML += `
@@ -71,7 +70,10 @@ async function updateCounts() {
     const leagues = data.leagues
     console.log(countries)
 
-    for (let i = 0; i < 5; i++) {
+    const countryContainer = document.getElementById('country');
+    const leagueContainer = document.getElementById('league');
+
+    for (let i = 0; i < 6; i++) {
         let leagueCountry = []
         for(const league of leagues){
             if (league.country_id === countries[i].country_id){
@@ -114,22 +116,28 @@ async function updateCounts() {
         const topStandingData = await topStanding.json()
         console.log("League ID : ",leagues[i].league_id)
 
+        console.log(`topStandingData : ${topStandingData[0]} , i : ${i}`)
 
-        leagueContainer.innerHTML += `
-        <img src="${leagues[i].league_logo}" alt="league-logo" class="mx-auto w-20">
-        <p class="flex justify-center items-center">${leagues[i].league_name}</p>
-        <p class="flex justify-center items-center">${leagues[i].league_season}</p>
-        <div class="flex justify-center items-center">
-            <img src="${topStandingData[0].team_badge}" alt="team-badge" class="size-14 mr-6">
-            <p>${topStandingData[0].team_name}</p>
-        </div>
+        if(topStandingData && topStandingData.length > 0){
+            leagueContainer.innerHTML += `
+            <img src="${leagues[i].league_logo}" alt="league-logo" class="mx-auto w-20">
+            <p class="flex justify-center items-center">${leagues[i].league_name}</p>
+            <p class="flex justify-center items-center">${leagues[i].league_season}</p>
+            <div class="flex justify-center items-center">
+                <img src="${topStandingData[0].team_badge}" alt="team-badge" class="size-14 mr-6">
+                <p>${topStandingData[0].team_name}</p>
+            </div>
+            `
+        }
+
         
-        `
     }
     
 
     const loadingSpinner = document.querySelector('.loading');
-    loadingSpinner.parentNode.removeChild(loadingSpinner);
+    if (loadingSpinner) {
+        loadingSpinner.parentNode.removeChild(loadingSpinner);
+    }
 }
 
-window.addEventListener('load', updateCounts);
+window.addEventListener('load', updateView);

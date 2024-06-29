@@ -1,4 +1,4 @@
-const API_KEY = "c120fedf6674e771f5af2e7fb14750813d7f479bab5f09c39dab738fab2f56f2"
+const API_KEY = "64be657bfea2a03855f04094768eb21f1d7ca0d28918fcfc14e77e2ef36acb27"
 
 async function fetchData(){
     try {
